@@ -141,9 +141,11 @@ class SpiralCircle {
 
     beginShape(); // Begin shape for drawing the spiral 
     for (let i = 0; i < 20; i++) {
-      let angle = i * angleStep + time * 0.5 + angleOffset;
-      let spiralX = this.x + cos(angle) * spiralSize * (i / 20);
-      let spiralY = this.y + sin(angle) * spiralSize * (i / 20);
+       // use Perlin noise for the angle offset and size modulation
+      let noiseFactor = noise(this.x * 0.01, this.y * 0.01, time + i * 0.1);
+      let angle = i * angleStep + time * 0.5 + angleOffset + noiseFactor * TWO_PI;
+      let spiralX = this.x + cos(angle) * spiralSize * (i / 20) * noiseFactor;
+      let spiralY = this.y + sin(angle) * spiralSize * (i / 20) * noiseFactor;
       vertex(spiralX, spiralY);
     }
     endShape();
