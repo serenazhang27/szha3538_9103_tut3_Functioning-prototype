@@ -33,6 +33,7 @@ function draw() {
 
 class SpiralCircle {
   constructor(x, y, diameter) {
+    //update to store the initial x and y position
     this.x = x;
     this.y = y;
     this.diameter = diameter;
@@ -57,6 +58,12 @@ class SpiralCircle {
     this.drawPattern(time);
     this.drawOuterRing(time);
     this.drawDynamicSpirals(time);
+
+    // use perlin noise in x and y for Spiral animtaion movement
+    let xOffset = noise(this.baseX * 0.01, time) * 50; // x offset for 'wave-like' movement
+    let yOffset = noise(this.baseY * 0.01, time) * 50; // y offset for 'wave-like' movement
+    let x = this.baseX + xOffset;
+    let y = this.baseY + yOffset;
   }
 
   drawInnerCircles() {
