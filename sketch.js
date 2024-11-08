@@ -23,7 +23,7 @@ function setup() {
 }
 
 function draw() {
-  background(2, 85, 122); // background color
+  background(2, 85, 122, 10); // Adding a transparency parameter makes the background color semi-transparent, creating a subtle trail effect.
   time += 0.01; // Increment time for smooth movement
 
   for (let i = 0; i < spiralCircles.length; i++) {
@@ -35,6 +35,7 @@ function draw() {
 
 class SpiralCircle {
   //use constructor to define a basic color
+  // Constructor technique is from: https://p5js.org/reference/p5/class/
   constructor(x, y, diameter) {
     //update to store the initial x and y position
     this.baseX = x;
@@ -73,6 +74,7 @@ class SpiralCircle {
       let b = blue(this.diametColors[i]) + bNoise - 25;
 
       // Limit color values to ensure they remain within valid RGB range
+      // The constrain technique is from:https://p5js.org/reference/p5/constrain/
       this.diametColors[i] = color(constrain(r, 100, 255), constrain(g, 100, 255), constrain(b, 100, 255));
     }
 
@@ -103,7 +105,7 @@ class SpiralCircle {
 
       fill(this.diametColors[i]);
       noStroke();
-      ellipse(x, y, currentDiameter);
+      ellipse(x, y, currentDiameter); // technique is from:https://p5js.org/reference/p5/ellipse/
 
       // Draw dots around the circle using sin() and cos() for smooth radial movement
       for (let j = 0; j < dotCount; j++) {
