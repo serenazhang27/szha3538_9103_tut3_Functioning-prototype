@@ -55,6 +55,11 @@ class SpiralCircle {
   }
 
   display(time) {
+
+
+
+
+
     // use perlin noise in x and y for Spiral animtaion movement
     let xOffset = noise(this.baseX * 0.01, time) * 50; // x offset for 'wave-like' movement
     let yOffset = noise(this.baseY * 0.01, time) * 50; // y offset for 'wave-like' movement
