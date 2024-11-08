@@ -34,12 +34,15 @@ function draw() {
 //Reorganized the structure of the circles and removed duplicate parts to make it cleaner
 
 class SpiralCircle {
+  //use constructor to define a basic color
   constructor(x, y, diameter) {
     //update to store the initial x and y position
     this.baseX = x;
     this.baseY = y;
     this.diameter = diameter;
     this.radius = diameter / 2; // Added radius property for use in spirals
+
+
     // pre-generate random colours for the dots to aviod the strobe
     this.dotColors = [];
     let dotCount = 40;
@@ -47,16 +50,31 @@ class SpiralCircle {
       this.dotColors.push(color(random(255), random(100), random(255))); // Store random red colours
     }
 
-    this.diametColors = [];
-    let numCircles = 10;
-    for (let i = 0; i < numCircles; i++) {
-      this.diametColors.push(color(random(255), random(255), random(250)));// Store random colors for each layer
-    }
+    // Set a base color for the gradient
+    this.baseColor = color(random(150, 255), random(150, 255), random(150, 255));
+
+
+    // New code for initializing gradient colors
+    // This technique is from https://www.w3schools.com/jsref/jsref_fill.asp
+    this.diametColors = new Array(10).fill(this.baseColor);
+
   }
 
   display(time) {
 
+    // Update diametColors using Perlin noise for a dynamic gradient effect
+    for (let i = 0; i < this.diametColors.length; i++) {
+      let rNoise = noise(this.baseX * 0.01, time * 0.5 + i) * 50;
+      let gNoise = noise(this.baseY * 0.01, time * 0.5 + i + 10) * 50;
+      let bNoise = noise((this.baseX + this.baseY) * 0.01, time * 0.1 + i + 20) * 50;
 
+      let r = red(this.diametColors[i]) + rNoise - 25; 
+      let g = green(this.diametColors[i]) + gNoise - 25;
+      let b = blue(this.diametColors[i]) + bNoise - 25;
+
+      // Limit color values to ensure they remain within valid RGB range
+      this.diametColors[i] = color(constrain(r, 100, 255), constrain(g, 100, 255), constrain(b, 100, 255));
+    }
 
 
 
